@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Create local changes
-      run: ./scripts/download_csv.sh
+      run: chmod 700 ./scripts/download_csv.sh && ./scripts/download_csv.sh
     - name: Commit files
       run: |
         git config --local user.email "action@github.com"

@@ -1,8 +1,6 @@
 on:
   schedule:
     - cron: "15 * * * *"
-  push:
-    branches: master
 
 jobs:
   update-data:

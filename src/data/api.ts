@@ -4,8 +4,7 @@ import moment from 'moment'
 async function responseToStats(response: Response): Promise<[Stat[], Stat[]]> {
     const rawStats = await response.text()
     const stats = rawStats.split('\n')
-        .filter(line => /[A-Za-z,\d/]+,+[A-Za-z,\d/]+/.test(line))
-        .slice(1)
+        .filter(line => /[A-Z]{2},/.test(line))
         .map(line => line.split(','))
         .map(sl => {
             const [rawCommunity, rawDate, rawInfected, rawHospitalized, rawIntensiveHospitalized, rawDeaths, rawRecovered] = sl
@@ -21,8 +20,7 @@ async function responseToStats(response: Response): Promise<[Stat[], Stat[]]> {
                 community, date, dateStr, infected, hospitalized, intensiveHospitalized, deaths, recovered
             }
         })
-
-
+        debugger
 
     const aggregatedStats = Array.from(
         stats.reduce(function (agg, stat) {

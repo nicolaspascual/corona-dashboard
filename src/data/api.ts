@@ -20,7 +20,6 @@ async function responseToStats(response: Response): Promise<[Stat[], Stat[]]> {
                 community, date, dateStr, infected, hospitalized, intensiveHospitalized, deaths, recovered
             }
         })
-        debugger
 
     const aggregatedStats = Array.from(
         stats.reduce(function (agg, stat) {

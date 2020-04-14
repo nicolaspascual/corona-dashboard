@@ -5,7 +5,9 @@ import { Stat } from './data/types/stat';
 import statsContext from './contexts/statContext'
 import Filters from './components/filters'
 import IFilters from './data/types/filters'
-import CommunitiesStats, { CommunityStat } from './components/communitiesStats';
+import CommunitiesStats, { CommunityStat } from './components/communitiesStats'
+import moment from 'moment'
+import LAST_UPDATED from './last_updated'
 
 function App() {
 
@@ -42,9 +44,12 @@ function App() {
 
   return (
     <statsContext.Provider value={stats}>
-      <div className="App" style={{ display: "flex", flexDirection: "column" }}>
-        <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly" }}>
+      <div className="App" style={{ display: "flex", flexDirection: "column"}}>
+        <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}>
           <Filters filters={filters} handleChange={handleFilterChange} />
+          <div style={{flexGrow: 1, textAlign: 'right'}}>
+            Last updated: {moment(LAST_UPDATED).format('DD/MM')}
+          </div>
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', height: 'calc(100% - 50px)' }}>
           <div style={{ flexBasis: '35%', height: '100%' }}>
@@ -55,6 +60,7 @@ function App() {
               stats={aggregatedStats}
               label="All"
               linesToShow={filters.linesToShow}
+              height="500px"
             />
           </div>
         </div>

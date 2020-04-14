@@ -58,9 +58,11 @@ function Filters({ filters, handleChange }: Props) {
 
     return (
         <>
-            <MultiCascader cascade={false} data={communities} value={filters.communities} onChange={handleChangeCommunities} />
+            <MultiCascader cascade={false} data={communities} value={filters.communities} onChange={handleChangeCommunities} searchable={false}/>
+            <span style={{marginRight: '5px'}}/>
             <DateRangePicker value={[filters.from, filters.to]} onChange={handleChangeDate} />
-            <MultiCascader cascade={false} data={linesToShowOptions} value={linesToShow} onChange={handleChangeLines} />
+            <span style={{marginRight: '5px'}}/>
+            <MultiCascader cascade={false} data={linesToShowOptions} value={linesToShow} onChange={handleChangeLines} searchable={false}/>
         </>
     )
 }

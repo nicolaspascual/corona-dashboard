@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import Stat, { communitiesDict } from '../data/types/stat'
 import { LineChart, XAxis, YAxis, Tooltip, Line, ResponsiveContainer } from 'recharts'
+import { Panel } from 'rsuite'
 import moment from 'moment'
 import StatContext from '../contexts/statContext'
 
@@ -14,29 +15,27 @@ type Props = {
     }
 }
 
-export function CommunityStat({ stats, label, linesToShow, height }: { stats: Stat[], label: string, height?: string} & Props) {
+
+export function CommunityStat({ stats, label, linesToShow, height }: { stats: Stat[], label: string, height?: string } & Props) {
+    let lineProps: Partial<Line['props']> = { type: 'monotone', dot: false, animationDuration: 750}
     return (
-        <div style={{ backgroundColor: '#CDE6F5', borderRadius: '25px', padding: '10px', margin: '25px', direction: 'ltr', height: height || '100%' }}>
-            <h4>{label}</h4>
-            <ResponsiveContainer>
-                <LineChart
-                    syncId="communitiesChart"
-                    data={stats}
-                    margin={{
-                        top: 25, right: 25, left: 25, bottom: 25,
-                    }}
-                >
-                    <XAxis dataKey="dateStr" tickFormatter={d => moment(d).format('DD')} />
-                    <YAxis />
-                    <Tooltip />
-                    {linesToShow.infected && <Line type="monotone" dataKey="infected" />}
-                    {linesToShow.hospitalized && <Line type="monotone" dataKey="hospitalized" />}
-                    {linesToShow.intensiveHospitalized && <Line type="monotone" dataKey="intensiveHospitalized" />}
-                    {linesToShow.deaths && <Line type="monotone" dataKey="deaths" />}
-                    {linesToShow.recovered && <Line type="monotone" dataKey="recovered" />}
-                </LineChart>
-            </ResponsiveContainer>
-        </div>
+        <Panel header={label} bordered shaded bodyFill defaultExpanded style={{ direction: 'ltr', margin: '10px 5px', backgroundColor: 'white', flexShrink: 0 }}>
+            <div style={{ height: height, padding: '0 20px'}}>
+                <ResponsiveContainer>
+                    <LineChart syncId="communitiesChart" data={stats} >
+                        <XAxis dataKey="dateStr" tickFormatter={d => moment(d).format('DD/MM')}/>
+                        <YAxis tickFormatter={v => `${Math.floor(v / 1000)}k`} width={30}/>
+                        <Tooltip labelFormatter={d => moment(d).format('DD/MM/YY')}/>
+
+                        {linesToShow.infected && <Line {...lineProps} dataKey="infected" />}
+                        {linesToShow.hospitalized && <Line {...lineProps} dataKey="hospitalized" />}
+                        {linesToShow.intensiveHospitalized && <Line {...lineProps} dataKey="intensiveHospitalized" />}
+                        {linesToShow.deaths && <Line {...lineProps} dataKey="deaths" />}
+                        {linesToShow.recovered && <Line {...lineProps} dataKey="recovered" />}
+                    </LineChart>
+                </ResponsiveContainer>
+            </div>
+        </Panel>
     )
 }
 

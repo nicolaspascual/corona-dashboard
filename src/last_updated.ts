@@ -1,1 +1,1 @@
-export default "Wed Jun 24 00:30:35 UTC 2020"
+export default "Wed Jun 24 01:15:52 UTC 2020"
